@@ -1,0 +1,27 @@
+name: Test the vocabulary
+on: [workflow_dispatch]
+
+jobs:
+  Validate:
+    name: Validate vocabulary
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: install dependencies
+        run: |
+          pip install git+https://github.com/isamplesorg/vocab_tools.git@main
+      - name: validate
+        run: |
+          vocab validate src/materialtype.ttl
+  
+      
